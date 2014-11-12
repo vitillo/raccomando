@@ -54,9 +54,6 @@ object AddonRecommender extends App {
 
   val factorErrors = lambdas.flatMap(lambda => {
     folds.map{ case(train, test) =>
-      train.cache
-      test.cache
-
       val model = ALS.trainImplicit(train.map{ case(u, a, r) => Rating(u, a, r) }, factors, iterations, lambda, 1.0)
       val usersAddons = test.map{ case (u, a, r) => (u, a) }
       val predictions = model.predict(usersAddons).map{ case Rating(u, a, r) => ((u, a), r) }
@@ -65,9 +62,6 @@ object AddonRecommender extends App {
         val err = (r1 - r2)
         err * err
       }.mean)
-
-      train.unpersist()
-      test.unpersist()
 
       (model, lambda, rmse)
     }
