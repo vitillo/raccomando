@@ -48,7 +48,7 @@ object AddonRecommender extends App {
 
   // Use cross validation to find the optimal number of latent factors
   val folds = MLUtils.kFold(hashedRatings, 10, 42)
-  val lambdas = List(0.1, 1)
+  val lambdas = List(0.1, 0.2, 0.3, 0.4, 0.5)
   val iterations = 10
   val factors = 100 // use as many factors as computationally possible
 
