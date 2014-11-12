@@ -14,7 +14,8 @@ import org.json4s.jackson.JsonMethods._
 object AddonRecommender extends App {
   implicit lazy val formats = DefaultFormats
 
-  val sc = new SparkContext("local[8]", "AddonRecommender")
+  val conf = new SparkConf().setAppName("AddonRecommender")
+  val sc = new SparkContext(conf)
 
   val ratings = sc.textFile("s3://mreid-test-src/split/").map(raw => {
     val parsedPing = parse(raw.substring(37))
