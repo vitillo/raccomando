@@ -33,7 +33,7 @@ object AddonRecommender extends App {
     (id, addonList)
   }}.filter{ case (id, addonList) => {
     // Remove sessions with empty add-on lists
-    addonList != List()
+    !addonList.isEmpty
   }}.flatMap{ case (id, addonList) => {
     // Create add-on ratings for each user
     addonList.map(addon => (id.extract[String], addon.extract[String], 1.0))
